@@ -8,13 +8,13 @@ RUN apt-get -y install nginx
 
 WORKDIR /etc/nginx/sites-available
 
-ADD default .
+COPY default .
 
 WORKDIR ../../../
 
 RUN apt-get -y install mariadb-server
 
-RUN apt-get -y install php7.3 php-mysql php-fpm php-pdo php-gd php-cli php-mbstring
+RUN apt-get -y install php7.3 php-mysql php-fpm php-pdo php-gd php-cli php-mbstring 
 
 WORKDIR /var/www/html/
 RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-english.tar.gz
@@ -35,6 +35,10 @@ RUN chown -R www-data:www-data *
 RUN chmod -R 755 /var/www/*
 ADD ./srcs/init.sh ./
 CMD bash init.sh
+
+# CMD reload nginx
+# CMD restart nginx
+
 
 #RUN bash init.sh
 
