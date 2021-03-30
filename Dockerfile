@@ -12,6 +12,10 @@ COPY default .
 
 WORKDIR ../../../
 
+ADD ./srcs/autoindex_on .
+ADD ./srcs/autoindex_off .
+ADD ./srcs/switch_autoindex.sh .
+
 RUN apt-get -y install mariadb-server
 
 RUN apt-get -y install php7.3 php-mysql php-fpm php-pdo php-gd php-cli php-mbstring 
@@ -35,6 +39,9 @@ RUN chown -R www-data:www-data *
 RUN chmod -R 755 /var/www/*
 ADD ./srcs/init.sh ./
 CMD bash init.sh
+
+# WORKDIR ../../../
+# CMD cp /var/www/html/index.nginx-debian.html .
 
 # CMD reload nginx
 # CMD restart nginx
