@@ -8,7 +8,7 @@ RUN apt-get -y install nginx
 
 WORKDIR /etc/nginx/sites-available
 
-COPY default .
+COPY ./srcs/default .
 
 WORKDIR ../../../
 
@@ -31,12 +31,13 @@ ADD ./srcs/config.inc.php phpmyadmin
 RUN wget https://wordpress.org/latest.tar.gz
 RUN tar -xvzf latest.tar.gz && rm -rf latest.tar.gz
 
-ADD ./srcs/wp-config.php /var/www/html
+ADD ./srcs/wp-config.php /var/www/html/wordpress
 
-RUN openssl req -x509 -nodes -days 365 -subj "/C=KR/ST=Korea/L=Seoul/O=innoaca/OU=42seoul/CN=forhjy" -newkey rsa:2048 -keyout /etc/ssl/nginx-selfsigned.key -out /etc/ssl/nginx-selfsigned.crt;
+RUN openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=France/L=Lyon/O=bmoulin/OU=42Lyon/CN=bmoulinCN" -newkey rsa:2048 -keyout /etc/ssl/nginx-selfsigned.key -out /etc/ssl/nginx-selfsigned.crt;
 
 RUN chown -R www-data:www-data *
 RUN chmod -R 755 /var/www/*
+WORKDIR ../
 ADD ./srcs/init.sh ./
 CMD bash init.sh
 
